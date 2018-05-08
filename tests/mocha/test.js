@@ -9,8 +9,9 @@ describe('Create note using post request',function(){
         json:true
     };
 
-
        // GET and POST request
+
+
     it('It has to create a new note',function(){
         options.uri = 'http://localhost:3000/api/Notes';
         options.method = 'POST';
