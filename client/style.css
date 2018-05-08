@@ -1,0 +1,37 @@
+.main-content {
+    height: 1000px;
+    background: #08bce3;
+}
+h1 {
+	text-align: center;
+	color: white;
+}
+
+form {
+	position: absolute;
+    left: 38.5%;
+    top: 23%;
+}
+.list {
+	position: absolute;
+	left: 38%;
+	top: 25%;
+	border: 2px solid white;
+    color: white;
+    height: 500px;
+    width: 320px;
+    padding-left: 0;
+}
+li {
+	margin: 10px 5px;
+	list-style: none;
+}
+
+.addNote {
+    margin-top: 50px;
+    margin-left: 58%;
+}
+
+.delete {
+	float: right;
+}

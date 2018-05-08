@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <!--[if IE]>
+	    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/><![endif]-->
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	    <title>Notepad</title>
+	    <link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+    <body>
+	    <div ng-app="notepad" ng-controller="notepadCtrl">
+		    <div class="main-content">
+			    <form ng-submit="addNote(noteObject)" ng-show="add">
+				    <input type="text" placeholder="Note Title" ng-model="noteObject.title">
+				    <input type="text" placeholder="Note Content" ng-model="noteObject.content">
+				    <button type="submit">Add</button>
+			    </form>
+			    <div class="content">
+				    <h1>{{header}}</h1> <button class="addNote" ng-hide="add" ng-click="showForm()">Add Note</button>
+				    <ul class="list" ng-show="notes"> 
+				    	<li ng-repeat="note in notes">{{$index + 1}}) {{note.title}} - {{note.content}}
+					    	<button ng-click="deleteNote(note)" class="delete">Delete</button>
+				    	</li>
+				    </ul>
+			    </div>
+		    </div>	
+	    </div>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="lb-services.js"></script>
+    <script>
+	var app = angular.module('notepad', ['lbServices']);
+	app.controller('notepadCtrl',['$scope','Note', function($scope,Note) {
+
+		$scope.header = 'NOTEPAD';
+
+		$scope.deleteNote = function(data){
+			Note.deleteById({id:data.id})
+			.$promise
+			.then(function(response){
+				console.log(response);
+			});
+		};
+
+		$scope.noteObject = {
+			title: null,
+			content: null
+		};
+
+		$scope.showForm = function(){
+			$scope.add = true;
+		};
+
+		$scope.addNote = function(data){
+			Note.create(data)
+			.$promise
+			.then(function(response){
+				$scope.add = false;
+				$scope.getNotes();
+			})
+			.catch(function(err){
+				console.log(err);
+			});
+		};
+
+		$scope.getNotes = function(){
+			Note.find()
+				.$promise
+				.then(function (response) {
+					$scope.notes = response;
+					console.log(response);
+				})
+				.catch(function(err){
+					console.log(err);
+				});
+		};
+		$scope.getNotes();
+	}]);
+	</script>
+    </body>
+</html>
