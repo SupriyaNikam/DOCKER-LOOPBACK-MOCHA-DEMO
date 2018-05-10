@@ -10,7 +10,7 @@ describe('Create note using post request',function(){
     };
 
 
-// GET and POST request
+       // GET and POST request
     it('It has to create a new note',function(){
         options.uri = 'http://localhost:3000/api/Notes';
         options.method = 'POST';
@@ -18,6 +18,8 @@ describe('Create note using post request',function(){
             title: 'First demo note',
             content: 'Demo note testing with post request'
         };
+
+        // request promise
         rp(options)
         .then(function(response){
           console.log('Post response', response);
